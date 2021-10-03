@@ -1,3 +1,4 @@
+const { Container } = require('instances-container');
 const createServer = require('../createServer');
 
 describe('HTTP server', () => {
@@ -36,5 +37,20 @@ describe('HTTP server', () => {
     expect(response.statusCode).toEqual(500);
     expect(responseJson.status).toEqual('error');
     expect(responseJson.message).toEqual('terjadi kegagalan pada server kami');
+  });
+
+  describe('when GET /', () => {
+    it('should response 200 and return hello world', async () => {
+      const server = await createServer({});
+
+      const response = await server.inject({
+        method: 'GET',
+        url: '/',
+      });
+
+      const responseJson = JSON.parse(response.payload);
+      expect(response.statusCode).toEqual(200);
+      expect(responseJson.value).toEqual('Hello world!');
+    });
   });
 });
