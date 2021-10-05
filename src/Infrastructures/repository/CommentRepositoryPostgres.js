@@ -17,8 +17,8 @@ class CommentRepositoryPostgres extends CommentRepository {
     const date = new Date().toISOString();
 
     const query = {
-      text: 'INSERT INTO comments VALUES($1,$2,$3,$4,$5) RETURNING id, content, owner',
-      values: [id, content, date, credentialId, threadId],
+      text: 'INSERT INTO comments VALUES($1,$2,$3,$4,$5,$6) RETURNING id, content, owner',
+      values: [id, content, date, credentialId, threadId, '0'],
     };
 
     const result = await this._pool.query(query);
